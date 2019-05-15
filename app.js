@@ -3,6 +3,7 @@ new Vue({
     
     data: {
         currencies: {},
+        api_key: "your_api_key",
         amount: 0,
         from: 'EUR',
         to: 'USD',
@@ -41,7 +42,7 @@ new Vue({
                 return;
             }
 
-            axios.get('https://free.currconv.com/api/v7/currencies?apiKey=d410c54c8c9b12e7ba0a')
+            axios.get(`https://free.currconv.com/api/v7/currencies?apiKey=${api_key}`)
             .then(response =>{
                 this.currencies = response.data.results;
                 localStorage.setItem('currencies', JSON.stringify(response.data.results));
@@ -51,7 +52,7 @@ new Vue({
         convertCurrency() {
             const key = `${this.from}_${this.to}`
             this.loading = true;
-            axios.get(`https://free.currconv.com/api/v7/convert?q=${key}&apiKey=d410c54c8c9b12e7ba0a`)
+            axios.get(`https://free.currconv.com/api/v7/convert?q=${key}&apiKey=${api_key}`)
              .then((response) => {
                  this.loading = false;
                  console.log(response);
